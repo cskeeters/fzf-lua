@@ -287,7 +287,7 @@ M.keymaps = function(opts)
   opts = config.normalize_opts(opts, "keymaps")
   if not opts then return end
 
-  local formatter = "%s │ %-14s │ %-33s │ %s"
+  local formatter = "%s │ %-20s │ %s"
   local key_modes = opts.modes or { "n", "i", "c", "v", "t" }
   local modes = {
     n = "blue",
@@ -320,8 +320,7 @@ M.keymaps = function(opts)
       utils.ansi_codes[modes[keymap.mode] or "blue"](keymap.mode),
       keymap.lhs:gsub("%s", "<Space>"),
       -- desc can be a multi-line string, normalize it
-      string.sub(string.gsub(keymap.desc or "", "\n%s+", "\r") or "", 1, 30),
-      (keymap.rhs or string.format("%s", keymap.callback)))
+      string.gsub(keymap.desc or "", "\n%s+", "\r") or "")
 
     local k = string.format("[%s:%s:%s]", keymap.buffer, keymap.mode, keymap.lhs)
     keymaps[k] = keymap
